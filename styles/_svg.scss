@@ -1,0 +1,25 @@
+.icons-search{
+    mask: url('/svg/search.svg') no-repeat;
+    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+        background: url('/svg/search.svg') no-repeat !important;
+        background-size: contain !important;
+    }
+  }
+.icons-bag{
+    mask: url('/svg/shopping-bag.svg') no-repeat;
+    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+        background: url('/svg/shopping-bag.svg') no-repeat !important;
+        background-size: contain !important;
+    }
+  }
+
+    
+    
+  .svg-icon {
+    display: inline-block;
+    width: 1.25rem;
+    height: 1.25rem;
+    // background: #fff;
+    -webkit-mask-size: contain;
+    -webkit-mask-position: center;
+  }
