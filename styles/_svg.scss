@@ -33,6 +33,13 @@
         background-size: contain !important;
     }
 }
+.icons-minus{
+    mask: url('/svg/minus.svg') no-repeat;
+    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+        background: url('/svg/minus.svg') no-repeat !important;
+        background-size: contain !important;
+    }
+}
     
     
   .svg-icon {
