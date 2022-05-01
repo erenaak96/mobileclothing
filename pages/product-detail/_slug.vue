@@ -24,7 +24,6 @@
                 <div class="w-full flex justify-between items-center">
                     <h2 class="font-bold text-blue text-xl leading-8">{{pageProduct.name}}</h2>
                     <Counter :count.sync="quantity"/>
-                    {{quantity}}
                 </div>
                 <span class="font-semibold text-mango text-xl leading-8">$ {{pageProduct.price}}</span>
                 <p class="text-textSecondary font-normal mt-2 tracking-wide text-sm leading-6">{{pageProduct.desc}}</p>
@@ -47,10 +46,10 @@
             </div>
             <!-- ADD TO CARD BTNS -->
             <div class="fixed buttons w-full p-4 items-center justify-between flex">
-                <button class="bg-blue min-w-min rounded-xl flex items  items-center justify-center mr-5">
+                <button @click="removeToCart()" class="bg-blue min-w-min rounded-xl flex items  items-center justify-center mr-5">
                     <span class="svg-icon icons-plus bg-softGray"></span>
                 </button>
-                <button @click="addToCard()" class="bg-mango text-softGray rounded-xl w-full  flex items-center justify-center">
+                <button @click="addToCart()" class="bg-mango text-softGray rounded-xl w-full  flex items-center justify-center">
                 Add to card
                 </button>
             </div>
@@ -73,12 +72,17 @@ export default {
     components: { Counter },
     mounted() {
         this.getRouteData();
+        //  localStorage.removeItem("card")
+        let newCard = localStorage.getItem("card");
+        let secd = JSON.parse(newCard);
+        console.log("card mani" ,secd);
     },
     data() {
         return {
             sizes: ["S", "M", "L", "XL"],
             pageProduct: [],
             quantity: 0,
+            cardData:[],
             products: [
                 {
                     name: "Leather Jacket",
@@ -107,18 +111,24 @@ export default {
                 this.products[prod].slug === newSlug ? this.pageProduct = this.products[prod] : "";
             }
         },
-        addToCard(){
+        addToCart(){
             const sizedData = {
                     ...this.pageProduct,
-                    size: this.selectedSize,
-                };
-            if(this.quantity > 0){
-                for(let qty = 0; qty < this.quantity ; qty++){
-                     this.$store.commit("_cardUpdate", sizedData);
-                }
-            }
-            console.log(this.$store.state.cardData);
-        }
+                    size : this.selectedSize,
+                    qty : this.quantity 
+                };   
+           this.$store.commit('addToCard',  sizedData);
+           console.log(this.$store.state.cart);
+           },
+        removeFromCart(){
+            const sizedData = {
+                    ...this.pageProduct,
+                    size : this.selectedSize,
+                    qty : this.quantity 
+                };   
+           this.$store.commit('removeFromCart',  sizedData);
+           console.log(this.$store.state.cart);
+           }
     },
 }
 </script>
