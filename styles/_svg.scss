@@ -13,13 +13,19 @@
     }
 }
 .icons-heart{
-mask: url('/svg/heart.svg') no-repeat;
-@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-    background: url('/svg/heart.svg') no-repeat !important;
-    background-size: contain !important;
+    mask: url('/svg/heart.svg') no-repeat;
+    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+        background: url('/svg/heart.svg') no-repeat !important;
+        background-size: contain !important;
+    }
 }
+.icons-plus{
+    mask: url('/svg/plus.svg') no-repeat;
+    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+        background: url('/svg/plus.svg') no-repeat !important;
+        background-size: contain !important;
+    }
 }
-
     
     
   .svg-icon {

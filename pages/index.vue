@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import SingleProduct from "../components/SingleProduct.vue";
+import SingleProduct from "../components/SingleProduct";
 export default {
     name: "IndexPage",
     data() {
