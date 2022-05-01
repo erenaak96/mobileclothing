@@ -23,7 +23,10 @@
             <div class="w-full rounded-t-3xl p-4 bg-white pb-24">
                 <div class="w-full flex justify-between items-center">
                     <h2 class="font-bold text-blue text-xl leading-8">{{pageProduct.name}}</h2>
-                    <Counter :count.sync="quantity"/>
+                    <div class="flex flex-col items-end">
+                        <Counter :count.sync="quantity"/>
+                        <p class="text-textSecondary font-normal text-red mt-2 text-xs" v-if="this.quantity < 1">Please add quantity</p>
+                    </div>
                 </div>
                 <span class="font-semibold text-mango text-xl leading-8">$ {{pageProduct.price}}</span>
                 <p class="text-textSecondary font-normal mt-2 tracking-wide text-sm leading-6">{{pageProduct.desc}}</p>
@@ -49,7 +52,9 @@
                 <button @click="removeToCart()" class="bg-blue min-w-min rounded-xl flex items  items-center justify-center mr-5">
                     <span class="svg-icon icons-plus bg-softGray"></span>
                 </button>
-                <button @click="addToCart()" class="bg-mango text-softGray rounded-xl w-full  flex items-center justify-center">
+                <button @click="addToCart()" :disabled="this.quantity < 1" 
+                v-bind:class="{'bg-gray-100 text-gray-400' : this.quantity < 1  , 'bg-mango text-softGray'  :this.quantity >= 1}"
+                class="rounded-xl w-full  flex items-center justify-center">
                 Add to card
                 </button>
             </div>
@@ -81,7 +86,7 @@ export default {
         return {
             sizes: ["S", "M", "L", "XL"],
             pageProduct: [],
-            quantity: 0,
+            quantity: 1,
             cardData:[],
             products: [
                 {

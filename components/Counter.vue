@@ -29,6 +29,10 @@ export default {
 
 <style lang="scss">
 .counter{
+    button{
+        max-height: 15px;
+        display: flex;
+    }
     .svg-icon{
         max-width: 12px;
         max-height:15px;

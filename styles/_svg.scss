@@ -40,6 +40,13 @@
         background-size: contain !important;
     }
 }
+.icons-close{
+    mask: url('/svg/close.svg') no-repeat;
+    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+        background: url('/svg/close.svg') no-repeat !important;
+        background-size: contain !important;
+    }
+}
     
     
   .svg-icon {
