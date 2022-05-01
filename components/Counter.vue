@@ -9,12 +9,19 @@
 <script>
 export default {
     props:["count"],
+    data(){
+        return{
+            quantity: this.count,
+        }
+    },
     methods:{
         incrementCount(){
-            this.count++;
+            this.quantity++;
+            this.$emit('update:count', this.quantity);
         },
         decrementCount(){
-            this.count > 0 ? this.count-- : '';
+            this.quantity > 0 ? this.quantity-- : '';
+            this.$emit('update:count', this.quantity);
         }
     }
 }

@@ -1,10 +1,10 @@
 export const state = () => ({
-    cardData: '',
+    cardData: [],
 })
 
 export const mutations = {
       _cardUpdate(state, value){
-        state.cardData = value;
+        state.cardData.push(value);
       },
 
 }

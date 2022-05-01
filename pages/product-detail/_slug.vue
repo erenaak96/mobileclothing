@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="bg-softGray" v-if="($nuxt.$route.path === '/product-detail/leather-jacket') || ($nuxt.$route.path === '/product-detail/purple-hoodie') ">
+        <div class="bg-softGray" v-if="($nuxt.$route.path === '/product-detail/leather-jacket') || ($nuxt.$route.path === '/product-detail/purple-hoodie')">
             <!-- TOP BAR -->
             <div class="flex justify-between items-center container p-4">
             <nuxt-link to="/" class="bg-white rounded-full h-10 w-10 flex items-center justify-center">
@@ -23,7 +23,8 @@
             <div class="w-full rounded-t-3xl p-4 bg-white pb-24">
                 <div class="w-full flex justify-between items-center">
                     <h2 class="font-bold text-blue text-xl leading-8">{{pageProduct.name}}</h2>
-                    <Counter :count="count"/>
+                    <Counter :count.sync="quantity"/>
+                    {{quantity}}
                 </div>
                 <span class="font-semibold text-mango text-xl leading-8">$ {{pageProduct.price}}</span>
                 <p class="text-textSecondary font-normal mt-2 tracking-wide text-sm leading-6">{{pageProduct.desc}}</p>
@@ -46,10 +47,10 @@
             </div>
             <!-- ADD TO CARD BTNS -->
             <div class="fixed buttons w-full p-4 items-center justify-between flex">
-                <button class="bg-blue min-w-min rounded-xl flex items  -center justify-center mr-5">
+                <button class="bg-blue min-w-min rounded-xl flex items  items-center justify-center mr-5">
                     <span class="svg-icon icons-plus bg-softGray"></span>
                 </button>
-                <button class="bg-mango text-softGray rounded-xl w-full  flex items-center justify-center">
+                <button @click="addToCard()" class="bg-mango text-softGray rounded-xl w-full  flex items-center justify-center">
                 Add to card
                 </button>
             </div>
@@ -69,24 +70,15 @@
 import Counter from "../../components/Counter.vue";
 export default {
     name: "ProductDetail",
+    components: { Counter },
     mounted() {
         this.getRouteData();
-    },
-    methods: {
-        getRouteData() {
-            const slug = $nuxt.$route.path; //API Servisleri ile çalışırken böyle bir kontrole gerek kalmıyor aslında asenkron olarak servis isteğinden gelen yanıta göre rota check atıyoruz fakat elimde servis olmadığı için böyle basic bi sorgu koydum
-            const newSlug = slug.replace("/product-detail/", "");
-            for (let prod = 0; prod < this.products.length; prod++) {
-                // console.log(this.products[prod]);
-                this.products[prod].slug === newSlug ? this.pageProduct = this.products[prod] : "";
-            }
-        }
     },
     data() {
         return {
             sizes: ["S", "M", "L", "XL"],
-            pageProduct: "",
-            count: 0,
+            pageProduct: [],
+            quantity: 0,
             products: [
                 {
                     name: "Leather Jacket",
@@ -106,7 +98,28 @@ export default {
             selectedSize: "S",
         };
     },
-    components: { Counter }
+    methods: {
+        getRouteData() {
+            const slug = $nuxt.$route.path; //API Servisleri ile çalışırken böyle bir kontrole gerek kalmıyor aslında asenkron olarak servis isteğinden gelen yanıta göre rota check atıyoruz fakat elimde servis olmadığı için böyle basic bi sorgu koydum
+            const newSlug = slug.replace("/product-detail/", "");
+            for (let prod = 0; prod < this.products.length; prod++) {
+                // console.log(this.products[prod]);
+                this.products[prod].slug === newSlug ? this.pageProduct = this.products[prod] : "";
+            }
+        },
+        addToCard(){
+            const sizedData = {
+                    ...this.pageProduct,
+                    size: this.selectedSize,
+                };
+            if(this.quantity > 0){
+                for(let qty = 0; qty < this.quantity ; qty++){
+                     this.$store.commit("_cardUpdate", sizedData);
+                }
+            }
+            console.log(this.$store.state.cardData);
+        }
+    },
 }
 </script>
 
