@@ -1,5 +1,5 @@
 <template>
-    <nuxt-link :to="productLink" class="single-product flex w-full p-2.5 mt-4 rounded-xl flex-col bg-softGray">
+    <nuxt-link :to="'/product-detail/' + productLink" class="single-product flex w-full p-2.5 mt-4 rounded-xl flex-col bg-softGray">
         <div class="w-full flex justify-end">
             <div class="bg-white w-8 h-8 flex items-center justify-center rounded-full">
                 <span class="svg-icon icons-heart bg-mango"></span>

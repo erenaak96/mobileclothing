@@ -26,6 +26,13 @@
         background-size: contain !important;
     }
 }
+.icons-chevron-left{
+    mask: url('/svg/chevron-left.svg') no-repeat;
+    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+        background: url('/svg/chevron-left.svg') no-repeat !important;
+        background-size: contain !important;
+    }
+}
     
     
   .svg-icon {
