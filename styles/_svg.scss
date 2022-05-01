@@ -4,14 +4,21 @@
         background: url('/svg/search.svg') no-repeat !important;
         background-size: contain !important;
     }
-  }
+}
 .icons-bag{
     mask: url('/svg/shopping-bag.svg') no-repeat;
     @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
         background: url('/svg/shopping-bag.svg') no-repeat !important;
         background-size: contain !important;
     }
-  }
+}
+.icons-heart{
+mask: url('/svg/heart.svg') no-repeat;
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    background: url('/svg/heart.svg') no-repeat !important;
+    background-size: contain !important;
+}
+}
 
     
     
