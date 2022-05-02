@@ -20,6 +20,9 @@ module.exports = {
         sans: ['Roboto', 'sans-serif'],
         serif: ['Roboto', 'serif'],
       },
+      borderRadius: {
+        'xl': '0.625rem',
+      }
     },
   },
   variants: {
