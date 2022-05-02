@@ -54,7 +54,8 @@
                 <button @click="addToCart()" :disabled="this.quantity < 1" 
                 v-bind:class="{'bg-gray-100 text-gray-400' : this.quantity < 1  , 'bg-mango text-softGray'  :this.quantity >= 1}"
                 class="rounded-xl w-full  flex items-center justify-center">
-                Add to card
+                <p v-if="added">Item added to card</p>
+                <p v-else>Add to card</p>
                 </button>
             </div>
         </div>
@@ -80,6 +81,7 @@ export default {
     data() {
         return {
             sizes: ["S", "M", "L", "XL"],
+            added: false,
             pageProduct: [],
             quantity: 1,
             cardData:[],
@@ -114,6 +116,10 @@ export default {
             }
         },
         addToCart(){ //KARTIMIZA MEVCUT ÜRÜN DATASINI EKLİYORUZ
+        this.added = true;
+        setTimeout(() => {
+            this.added = false;
+        }, 1500);
             const sizedData = {
                     ...this.pageProduct,
                     size : this.selectedSize,
