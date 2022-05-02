@@ -40,7 +40,7 @@ export default {
                 "New",
                 "Special"
             ],
-            products: [
+            products: [//ELİMİZDE APİ SERVİSİ OLMADIĞI İÇİN DEMO DATA KOYUYORUZ
                 {
                     name: "Leather Jacket",
                     price: "49.00",

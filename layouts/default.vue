@@ -21,15 +21,13 @@ export default {
   mounted(){
     this.getScreen();
      window.addEventListener('resize', (e)=>{
-        this.getScreen()
-        console.log("resize");
+        this.getScreen();
 
         });
   },
   methods:{
     getScreen(){
       (window.innerWidth < 767) ? this.isMobile = true : this.isMobile = false;
-        console.log(this.isMobile , window.innerWidth);
     }
   }
 }

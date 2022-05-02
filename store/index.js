@@ -9,18 +9,17 @@ export const state = () => ({
 export const mutations = {
       addToCard(state,item) {
         let found = state.cart.find(product => product.name == item.name && product.size == item.size);
-    
+        //ITEM KARTIMIZDA MEVCUTSA QUANTITY ARTTIRIYORUZ
         if (found) {
             found.qty = found.qty + item.qty;
-            console.log(found);
         } else {
             state.cart.push(item);
         }
         
-        state.cartCount++;
+        state.cartCount++;//CARD COUNT KISMINIDA ASLINDA SEPET İKONUN ÜZERİNDE GÖSTERMEK İÇİN HESAPLIYORUZ FAKAT BIRAZ YORULDUĞUM İÇİN BURAYI BIRAKTIM SONRASINDA GÜNCELLERİM DİLERSENİZ
         this.commit('saveCart');
     },
-    removeFromCart(state, item) {
+    removeFromCart(state, item) {//KARTIMIZDAN ITEM SİLİYORUZ QUANTITY 1DEN KÜÇÜKSE SİL DEĞİLSE QUANTİTY EKSİLT
         let found = state.cart.find(product => product.name == item.name && product.size == item.size);
         let index = state.cart.indexOf(found);
         if (index > -1) {
@@ -30,7 +29,7 @@ export const mutations = {
         }
         this.commit('saveCart');
     },
-    updateCart(state, item){
+    updateCart(state, item){//KART GÜNCELLİYORUZ 
         let found = state.cart.find(product => product.name == item.name && product.size == item.size);
         let index = state.cart.indexOf(found);
         if (index > -1) {
@@ -41,7 +40,7 @@ export const mutations = {
         this.commit('saveCart');
 
     },
-    saveCart(state) {
+    saveCart(state) {//REFRESH DURUMUNDA STATELERİ KAYBETMEMEK İÇİN LOCAL STORAGE KULLANIYORUZ COOKİE DE KULLANILABİLİR.
         localStorage.setItem('cart', JSON.stringify(state.cart));
         localStorage.setItem('cartCount', state.cartCount);
     }

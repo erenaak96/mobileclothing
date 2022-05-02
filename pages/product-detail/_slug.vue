@@ -48,7 +48,7 @@
             </div>
             <!-- ADD TO CARD BTNS -->
             <div class="fixed buttons w-full p-4 items-center justify-between flex">
-                <button @click="removeToCart()" class="bg-blue min-w-min rounded-xl flex items  items-center justify-center mr-5">
+                <button  class="bg-blue min-w-min rounded-xl flex items  items-center justify-center mr-5">
                     <span class="svg-icon icons-plus bg-softGray"></span>
                 </button>
                 <button @click="addToCart()" :disabled="this.quantity < 1" 
@@ -76,10 +76,6 @@ export default {
     components: { Counter },
     mounted() {
         this.getRouteData();
-        //  localStorage.removeItem("card")
-        let newCard = localStorage.getItem("card");
-        let secd = JSON.parse(newCard);
-        console.log("card mani" ,secd);
     },
     data() {
         return {
@@ -117,23 +113,21 @@ export default {
                 this.products[prod].slug === newSlug ? this.pageProduct = this.products[prod] : "";
             }
         },
-        addToCart(){
+        addToCart(){ //KARTIMIZA MEVCUT ÜRÜN DATASINI EKLİYORUZ
             const sizedData = {
                     ...this.pageProduct,
                     size : this.selectedSize,
                     qty : this.quantity 
                 };   
            this.$store.commit('addToCard',  sizedData);
-           console.log(this.$store.state.cart);
            },
-        removeFromCart(){
+        removeFromCart(){//KARTTAN MEVCUT ÜRÜNÜ SİLİYORUZ DİĞER VİEW İÇİN DENEMESİNİ YAPMIŞTIM DİKKATE ALMANIZA GEREK YOK
             const sizedData = {
                     ...this.pageProduct,
                     size : this.selectedSize,
                     qty : this.quantity 
                 };   
            this.$store.commit('removeFromCart',  sizedData);
-           console.log(this.$store.state.cart);
            }
     },
 }

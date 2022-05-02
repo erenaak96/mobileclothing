@@ -4,9 +4,9 @@
         <div class="bg-softGray h-screen w-screen flex justify-center items-center flex-col p-4" v-if="cartPaymentState === 'error'">
                 <img :src="require('@/static/img/empty.png')">
                 <p class="text-textSecondary font-normal text-center mt-2 tracking-wide text-sm leading-8">An error occured in payment state</p>
-                <nuxt-link to="/card" class="bg-mango mt-4 text-softGray rounded-xl w-full h-12 flex justify-center items-center">
+                <a href="/cart" class="bg-mango mt-4 text-softGray rounded-xl w-full h-12 flex justify-center items-center">
                     Go Back Card
-                </nuxt-link>
+                </a>
         </div>
         <div v-else>
         <div class="flex justify-between items-center w-full p-4" >
@@ -76,33 +76,22 @@ export default {
     data(){
         this.pk = process.env.STRIPE_PK;
         return{
-            cardData: [],
-            calculatedPrice: 0, 
-            cartPaymentState: '',
+            cardData: [],//STATEDEN GELEN TOTAL CARD DATASI
+            calculatedPrice: 0, //TOPLAM FİYAT 
+            cartPaymentState: '',//STRIPE DONUŞ QUERY STRING EKSTRA VİEWLER YARATMAK YERİNE BÖYLE BASİT BİR SORGUYLA CEVAP EKRANLARINI CART İÇERİSİNDE BASTIM
              lineItems: [
-             
+            //  STRIPE TARAFINA GİDECEK FORMATLI DATA
             ],
-            token: null,
             successURL: process.client && `${window.location.origin}${window.location.pathname}?state=success`,
             cancelURL: process.client && `${window.location.origin}${window.location.pathname}?state=error`,
-            // Misc
-      redirectState: '',
         }
     },
-    // computed:{
-    //     getCardData:{
-    //         get(){
-    //             this.cardData= JSON.parse(localStorage.getItem("cart"));
-    //             return this.cardData
-    //         },
-    //     }
-    // },
     mounted(){
         
         let params = (new URL(document.location)).searchParams;
         this.cartPaymentState = params.get("state");
         if(this.cartPaymentState === 'success'){
-            localStorage.removeItem("cart");
+            localStorage.removeItem("cart");//QUERY STRING SUCCESS DONERSE KARTI BOŞALTIYORUZ SAĞLIKLI DEĞİL ASLINDA OLMASI GEREKEN SUCCESS EVENTI TETIKLENDIĞINDE ÇALIŞMASI FAKAT ÇOK DETAYLI ARAŞTIRAMADIM STRIPE TARAFINI GERÇEK BİR PROJEDE BU ŞEKİLDE BİR KULLANIM OLMAZ
         }
         this.cardData= JSON.parse(localStorage.getItem("cart"));
         this.calculateCardTotal();
@@ -110,48 +99,45 @@ export default {
     },
     methods:{
         checkout() {
-            this.$refs.checkoutRef.redirectToCheckout();
+            this.$refs.checkoutRef.redirectToCheckout(); //STRIPE REDIRECT
         },
-        calculateCardTotal(){
-            if(this.cardData){
+        calculateCardTotal(){//CART TOTAL PRICE HESAPLIYORUZ
+            if(this.cardData){//DATA YOKSA ÇALIŞMAMALI
                 this.cardData.map((item) =>{
                     let totalPrice = item.qty * item.price; 
                     this.calculatedPrice = this.calculatedPrice + totalPrice;
                  })
             }
         },
-        createPaymentList(){
-                if(this.cardData){
+        createPaymentList(){//STRIPE İÇİMN DATA FORMATLIYORUZ   
+                if(this.cardData){//DATA YOKSA ÇALIŞMAMALI
                     let last;
-                const newData = this.cardData.map(i =>{
-                    return{
-                        price: i.priceSlug,
-                        quantity: i.qty
-                    }
-                });
-                let folded = newData.reduce(function(prev,curr){
-                    if (last) {
-                        if (last.price === curr.price) {
-                            last.quantity += curr.quantity;
-                            return prev;
+                    const newData = this.cardData.map(i =>{//STRIPE SADECE PRİCE QUANTİTY KABUL ETTİĞİ İÇİN FORMATLIYORUZ
+                        return{
+                            price: i.priceSlug,
+                            quantity: i.qty
                         }
-                    }
-                    last = curr;
-                    prev.push(curr);
-                    return prev;
-                },[]);
-               this.lineItems = folded;
-               console.log(this.lineItems);
+                    });
+                    let folded = newData.reduce(function(prev,curr){//FORMATLI DATADA AYNI PRİCESLUGA SAHİP OLANLARIN QUANTITYLERİNİ TOPLUYORUZ
+                        if (last) {
+                            if (last.price === curr.price) {
+                                last.quantity += curr.quantity;
+                                return prev;
+                            }
+                        }
+                        last = curr;
+                        prev.push(curr);
+                        return prev;
+                    },[]);
+                this.lineItems = folded;
                 }
         },
-        log(item){
-            console.log('changes')
+        log(item){//COUNTERIN HER KULLANIMINDA STATE VE FORMATLAMALARIMIZI TETİKLİYORUZ
             this.$store.commit('updateCart', item);
             this.cardData = JSON.parse(localStorage.getItem("cart"));
             this.calculatedPrice = 0;
             this.calculateCardTotal();
             this.createPaymentList();
-            console.log(this.$store.state.cart);
         }
     },
 
