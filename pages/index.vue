@@ -6,9 +6,9 @@
         <input placeholder="Search" type="text" class="bg-softGray rounded-xl h-10 focus:outline-none pl-10 w-full">
         <span class="svg-icon icons-search bg-blue absolute"></span>
       </div>
-      <div class="bg-softGray rounded-full h-10 w-10 flex items-center justify-center">
-        <span class="svg-icon icons-bag bg-blue"></span>
-      </div>
+       <nuxt-link to="/cart" class="bg-softGray rounded-full h-10 w-10 flex items-center justify-center">
+                <span class="svg-icon icons-bag bg-blue"></span>
+       </nuxt-link>
     </div>
     <div class="flex w-full px-4 pb-4 overflow-x-auto">
       <span v-for="(filter, index) in filters" :key="index" v-bind:class="{'text-white bg-blue' : index === 0 }"
