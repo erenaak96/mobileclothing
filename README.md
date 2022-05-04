@@ -1,4 +1,4 @@
-# vivoo
+# mobile clothing app with stripe checkout
 
 ## Build Setup
 
