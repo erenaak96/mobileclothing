@@ -1,7 +1,10 @@
 {
-  "name": "vivoo",
+  "name": "mobileclothing",
   "version": "1.0.0",
-  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/erenaak96/mobileclothing.git"
+  },
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
@@ -21,7 +24,7 @@
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^4.2.1",
     "postcss": "^8.4.4",
-    "node-sass": "^4.12.0",
+    "node-sass": "npm:sass@^1.54.9",
     "sass-loader": "^8.0.2"
   }
 }
